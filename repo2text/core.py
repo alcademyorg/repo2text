@@ -91,9 +91,6 @@ class RepoAnalyzer:
                 "encoding_errors": self.stats["encoding_errors"],
                 "total_characters": self.stats["total_characters"],
                 "total_lines": self.stats["total_lines"],
-                "total_files": file_tree["total_files"],
-                "total_directories": file_tree["total_dirs"],
-                "tree_structure": file_tree["tree"],
                 "output_file": str(output_file),
             }
 
@@ -337,11 +334,7 @@ class RepoAnalyzer:
                 # If all fail, use utf-8 with error handling
                 return raw_data.decode("utf-8", errors="replace")
             else:
-                try:
-                    return raw_data.decode(encoding)
-                except UnicodeDecodeError:
-                    # If detected encoding fails, fallback to utf-8 with error handling
-                    return raw_data.decode("utf-8", errors="replace")
+                return raw_data.decode(encoding)
 
         except Exception as e:
             logger.warning(f"Could not read file {file_path}: {str(e)}")
